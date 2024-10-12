@@ -12,7 +12,8 @@ const CurrentUser = () => {
             <Popover placement='bottomRight' trigger="click"
                 overlayInnerStyle={{ padding: 0 }}
                 overlayStyle={{ zIndex: 999 }}>
-                <CustomAvatar name={user.name} />
+                <CustomAvatar name={user?.name} src={user?.avatarUrl}
+                    size="default" style={{ cursor: "pointer" }} />
             </Popover>
         </>
     )

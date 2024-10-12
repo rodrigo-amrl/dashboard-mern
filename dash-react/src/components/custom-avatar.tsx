@@ -1,12 +1,14 @@
 import { Avatar } from "antd"
 type Props = {
-    name: string
+    name?: string
 }
 const CustomAvatar = ({ name, style, ...rest }: Props) => {
     return (
 
         <Avatar alt="React" size="small"
-            style={{ backgroundColor: "#87d068", display: "flex", alignItems: "center", border: "none" }}>
+            style={{ backgroundColor: "#87d068", display: "flex", alignItems: "center", border: "none", ...style }}
+            {...rest}
+        >
             {name}
         </Avatar>
     )
