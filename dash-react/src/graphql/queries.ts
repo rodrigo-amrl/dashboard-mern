@@ -32,3 +32,20 @@ export const TASK_STAGES_SELECT_QUERY = gql`
     }
   }
 `;
+export const DASHBOARD_CALENDAR_UPCOMING_EVENTS_QUERY = gql`
+query DashboardCalendarUpcommingEvents(
+  $filter:EventFilter!
+  $sorting:[EventSort!]
+  $paging:OffsetPaging!
+){
+  events(filter:$filter,sorting:$sorting,paging:$paging){
+    totalCount
+    nodes{
+      id
+      title
+      color
+      startDate
+      endDate
+    }
+  }
+}`
