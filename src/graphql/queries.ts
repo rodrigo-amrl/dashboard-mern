@@ -164,7 +164,7 @@ query DashboardDealsChart(
       id
       title
       #get the sum of all deals in this stage an group by
-      closeDateMonth and closeDateYear
+      # closeDateMonth and closeDateYear
       dealsAggregate{
         groupBy{
           closeDateMonth

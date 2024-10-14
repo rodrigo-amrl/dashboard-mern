@@ -12,6 +12,7 @@ const DealsChart = () => {
             gqlQuery: DASHBOARD_DEALS_CHART_QUERY
         }
     })
+    console.log(data)
     const dealData = React.useMemo(() => {
         // return mapDealsData(data?.data);
         return data?.data
@@ -37,7 +38,7 @@ const DealsChart = () => {
             }
         },
         tooltip: {
-            formatter: (data) => {
+            formatter: (data: any) => {
                 return {
                     name: data.state,
                     value: `$${Number(data.value) / 1000}k`
