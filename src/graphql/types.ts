@@ -26,7 +26,34 @@ export type UpdateCompanyMutationVariables = Types.Exact<{
 }>;
 
 export type UpdateCompanyMutation = {
-  updateOneCompany: Pick<Types.Company, "id" | "name" | "totalRevenue">;
+  updateOneCompany: Pick<
+    Types.Company,
+    | "id"
+    | "name"
+    | "totalRevenue"
+    | "industry"
+    | "companySize"
+    | "businessType"
+    | "country"
+    | "website"
+    | "avatarUrl"
+  > & { salesOwner: Pick<Types.User, "id" | "name" | "avatarUrl"> };
+};
+
+export type UpdateTaskStageMutationVariables = Types.Exact<{
+  input: Types.UpdateOneTaskInput;
+}>;
+
+export type UpdateTaskStageMutation = { updateOneTask: Pick<Types.Task, "id"> };
+
+export type CreateTaskMutationVariables = Types.Exact<{
+  input: Types.CreateOneTaskInput;
+}>;
+
+export type CreateTaskMutation = {
+  createOneTask: Pick<Types.Task, "id" | "title"> & {
+    stage?: Types.Maybe<Pick<Types.TaskStage, "id" | "title">>;
+  };
 };
 
 export type UpdateTaskMutationVariables = Types.Exact<{
@@ -34,34 +61,13 @@ export type UpdateTaskMutationVariables = Types.Exact<{
 }>;
 
 export type UpdateTaskMutation = {
-  updateOneTask: Pick<Types.Task, "id" | "title" | "completed" | "dueDate"> & {
+  updateOneTask: Pick<
+    Types.Task,
+    "id" | "title" | "completed" | "description" | "dueDate"
+  > & {
     stage?: Types.Maybe<Pick<Types.TaskStage, "id" | "title">>;
     users: Array<Pick<Types.User, "id" | "name" | "avatarUrl">>;
     checklist: Array<Pick<Types.CheckListItem, "title" | "checked">>;
-  };
-};
-
-export type UsersSelectQueryVariables = Types.Exact<{
-  filter: Types.UserFilter;
-  sorting?: Types.InputMaybe<Array<Types.UserSort> | Types.UserSort>;
-  paging: Types.OffsetPaging;
-}>;
-
-export type UsersSelectQuery = {
-  users: Pick<Types.UserConnection, "totalCount"> & {
-    nodes: Array<Pick<Types.User, "id" | "name" | "avatarUrl">>;
-  };
-};
-
-export type TaskStagesSelectQueryVariables = Types.Exact<{
-  filter: Types.TaskStageFilter;
-  sorting?: Types.InputMaybe<Array<Types.TaskStageSort> | Types.TaskStageSort>;
-  paging: Types.OffsetPaging;
-}>;
-
-export type TaskStagesSelectQuery = {
-  taskStages: Pick<Types.TaskStageConnection, "totalCount"> & {
-    nodes: Array<Pick<Types.TaskStage, "id" | "title">>;
   };
 };
 
@@ -75,8 +81,46 @@ export type DashboardTotalCountsQuery = {
   deals: Pick<Types.DealConnection, "totalCount">;
 };
 
+export type DashboardCalendarUpcomingEventsQueryVariables = Types.Exact<{
+  filter: Types.EventFilter;
+  sorting?: Types.InputMaybe<Array<Types.EventSort> | Types.EventSort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type DashboardCalendarUpcomingEventsQuery = {
+  events: Pick<Types.EventConnection, "totalCount"> & {
+    nodes: Array<
+      Pick<Types.Event, "id" | "title" | "color" | "startDate" | "endDate">
+    >;
+  };
+};
+
+export type DashboardDealsChartQueryVariables = Types.Exact<{
+  filter: Types.DealStageFilter;
+  sorting?: Types.InputMaybe<Array<Types.DealStageSort> | Types.DealStageSort>;
+  paging?: Types.InputMaybe<Types.OffsetPaging>;
+}>;
+
+export type DashboardDealsChartQuery = {
+  dealStages: Pick<Types.DealStageConnection, "totalCount"> & {
+    nodes: Array<
+      Pick<Types.DealStage, "id" | "title"> & {
+        dealsAggregate: Array<{
+          groupBy?: Types.Maybe<
+            Pick<
+              Types.DealStageDealsAggregateGroupBy,
+              "closeDateMonth" | "closeDateYear"
+            >
+          >;
+          sum?: Types.Maybe<Pick<Types.DealStageDealsSumAggregate, "value">>;
+        }>;
+      }
+    >;
+  };
+};
+
 export type DashboardLatestActivitiesDealsQueryVariables = Types.Exact<{
-  filter?: Types.InputMaybe<Types.DealFilter>;
+  filter: Types.DealFilter;
   sorting?: Types.InputMaybe<Array<Types.DealSort> | Types.DealSort>;
   paging?: Types.InputMaybe<Types.OffsetPaging>;
 }>;
@@ -130,17 +174,15 @@ export type CompaniesListQuery = {
   };
 };
 
-export type DashboardCalendarUpcommingEventsQueryVariables = Types.Exact<{
-  filter: Types.EventFilter;
-  sorting?: Types.InputMaybe<Array<Types.EventSort> | Types.EventSort>;
+export type UsersSelectQueryVariables = Types.Exact<{
+  filter: Types.UserFilter;
+  sorting?: Types.InputMaybe<Array<Types.UserSort> | Types.UserSort>;
   paging: Types.OffsetPaging;
 }>;
 
-export type DashboardCalendarUpcommingEventsQuery = {
-  events: Pick<Types.EventConnection, "totalCount"> & {
-    nodes: Array<
-      Pick<Types.Event, "id" | "title" | "color" | "startDate" | "endDate">
-    >;
+export type UsersSelectQuery = {
+  users: Pick<Types.UserConnection, "totalCount"> & {
+    nodes: Array<Pick<Types.User, "id" | "name" | "avatarUrl">>;
   };
 };
 
@@ -157,30 +199,6 @@ export type CompanyContactsTableQuery = {
         Types.Contact,
         "id" | "name" | "avatarUrl" | "jobTitle" | "email" | "phone" | "status"
       >
-    >;
-  };
-};
-
-export type DashboardDealsChartQueryVariables = Types.Exact<{
-  filter: Types.DealStageFilter;
-  sorting?: Types.InputMaybe<Array<Types.DealStageSort> | Types.DealStageSort>;
-  paging?: Types.InputMaybe<Types.OffsetPaging>;
-}>;
-
-export type DashboardDealsChartQuery = {
-  dealStages: Pick<Types.DealStageConnection, "totalCount"> & {
-    nodes: Array<
-      Pick<Types.DealStage, "id" | "title"> & {
-        dealsAggregate: Array<{
-          groupBy?: Types.Maybe<
-            Pick<
-              Types.DealStageDealsAggregateGroupBy,
-              "closeDateMonth" | "closeDateYear"
-            >
-          >;
-          sum?: Types.Maybe<Pick<Types.DealStageDealsSumAggregate, "value">>;
-        }>;
-      }
     >;
   };
 };
@@ -218,5 +236,17 @@ export type TasksQuery = {
         | "updatedAt"
       > & { users: Array<Pick<Types.User, "id" | "name" | "avatarUrl">> }
     >;
+  };
+};
+
+export type TaskStagesSelectQueryVariables = Types.Exact<{
+  filter: Types.TaskStageFilter;
+  sorting?: Types.InputMaybe<Array<Types.TaskStageSort> | Types.TaskStageSort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type TaskStagesSelectQuery = {
+  taskStages: Pick<Types.TaskStageConnection, "totalCount"> & {
+    nodes: Array<Pick<Types.TaskStage, "id" | "title">>;
   };
 };
