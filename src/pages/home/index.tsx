@@ -3,6 +3,7 @@ import { DealsChart, UpcomingEvents, DashboardTotalCountCard } from "../../compo
 import { useCustom } from "@refinedev/core"
 import { DASHBOARD_TOTAL_COUNTS_QUERY } from "../../graphql/queries"
 import { DashboardTotalCountsQuery } from "../../graphql/types"
+import LatestActivities from "../../components/home/lastest-activities"
 
 export const Home = () => {
     const { data, isLoading } = useCustom<DashboardTotalCountsQuery>({
@@ -35,6 +36,11 @@ export const Home = () => {
 
                 <Col xs={24} sm={24} xl={16} style={{ height: '460px' }}>
                     <DealsChart />
+                </Col>
+            </Row>
+            <Row gutter={[32, 32]} style={{ marginTop: "32px" }}>
+                <Col xs={24}>
+                    <LatestActivities />
                 </Col>
             </Row>
         </div>
