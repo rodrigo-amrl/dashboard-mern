@@ -2,8 +2,8 @@ import type { AuthProvider } from "@refinedev/core";
 import type { User } from "../graphql/schema.types";
 import { API_URL, dataProvider } from "./data";
 
-export const sdf = {
-    email: "rodrigo@test.com.br",
+export const authCredentials = {
+    email: "rodrigo@test.com",
     password: "testapp",
 };
 
